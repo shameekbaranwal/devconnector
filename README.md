@@ -1,4 +1,4 @@
 # devconnector
 
-A full-stack social networking applciation for developers.
-Made using the MERN Stack.
+a full-stack social networking application for developers.
+made using the MERN Stack.
