@@ -16,7 +16,7 @@ const auth = async (req, res, next) => {
 	try {
 		const decoded = jwt.verify(token, c.get('JWT_SECRET'));
 		req.user = decoded.user;
-		console.log('| Token verified, user authenticated.');
+		console.log('| Token verified, user successfully authenticated.');
 		next();
 	} catch (error) {
 		console.log('! Could not verify token, authorization denied.');

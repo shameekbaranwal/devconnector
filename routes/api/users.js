@@ -33,7 +33,10 @@ router.post(
 		// validation logic
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
-			console.log('could not register new user : ' + errors);
+			console.log(
+				'Could not register the user : ' +
+					errors.array().map(e => e.msg),
+			);
 			return res.status(400).json({ errors: errors.array() });
 		}
 		const { name, email, password } = req.body;
