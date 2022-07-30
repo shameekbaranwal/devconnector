@@ -9,9 +9,25 @@ const router = express.Router();
 
 // @route 		GET api/profile
 // @desc 		get all profiles
-// @access		Public
-router.get('/', (req, res) => {
-	res.send('profile route 🗿');
+// @access		public
+router.get('/', async (req, res) => {
+	try {
+		// the populate function takes in a field's name as the first parameter which should be of the type MongoID
+		// it looks for a document with that ID, it grabs the fields mentioned in the second parameter from that document,
+		// and conjoins those fields within the first parameter field in the original doc, and sends the whole thing back.
+		console.log('| Trying to get data of all profiles from database.');
+		const profiles = await Profile.find().populate('user', [
+			'name',
+			'avatar',
+		]);
+		console.log(
+			'| Got all profiles from database, sending them back to client.',
+		);
+		res.json(profiles);
+	} catch (error) {
+		console.error('! Unable to return profiles of all users - ' + errors);
+		res.status(500).send('Server error.');
+	}
 });
 
 // @route	 	GET api/profile/me
@@ -32,7 +48,9 @@ router.get('/me', auth, async (req, res) => {
 			['name', 'avatar'],
 		);
 		if (!profile) {
-			console.log('! Could not find a profile associated with the user.');
+			console.error(
+				'! Could not find a profile associated with the user.',
+			);
 			return res
 				.status(400)
 				.json({ msg: 'No profile available for this user.' });
@@ -144,10 +162,39 @@ router.post(
 			);
 			return res.json(profile);
 		} catch (error) {
-			console.log('! Unable to add the profile to database.');
+			console.error('! Unable to add the profile to database.');
 			res.status(500).send('Server unable to add profile to database.');
 		}
 	},
 );
+
+// @route	 	GET api/profile/user/:user_id
+// @desc		get profile of a specific user by his ID
+// @access		public
+router.get('/user/:user_id', async (req, res) => {
+	try {
+		console.log(
+			`| Trying to get a profile with ID = ${req.params.user_id} from the database.`,
+		);
+		const profile = await Profile.findOne({ user: req.params.user_id });
+		if (!profile) {
+			console.log(
+				`! Could not get a profile for user ${req.params.user_id}.`,
+			);
+			return res.status(400).json({ msg: 'Profile not found.' });
+		}
+		console.log(`| Got the profile, sending back to client.`);
+		res.json(profile);
+	} catch (error) {
+		console.error(
+			`! Could not get profile for user ${$req.params.user_id} from the database. - ${error}`,
+		);
+		// in case the error is occurring because of the object ID not being of a valid format, then the profile.findOne will throw an error and cause the response to be "server error", which is wrong. so in that case we want to still say that profile is not found for that user. this can be implemented by:
+		if (error.kind === 'ObjectId')
+			return res.status(400).json({ msg: 'Profile not found.' });
+
+		res.status(500).send('Server error.');
+	}
+});
 
 export default router;
