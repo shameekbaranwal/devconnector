@@ -3,6 +3,7 @@ import { check, validationResult } from 'express-validator';
 
 import auth from '../../middleware/auth.js';
 import Profile from '../../models/Profile.js';
+import User from '../../models/User.js';
 import { isEmpty } from '../../util.js';
 
 const router = express.Router();
@@ -193,6 +194,31 @@ router.get('/user/:user_id', async (req, res) => {
 		if (error.kind === 'ObjectId')
 			return res.status(400).json({ msg: 'Profile not found.' });
 
+		res.status(500).send('Server error.');
+	}
+});
+
+// @route 		DELETE api/profile
+// @desc 		delete the currently logged-in user's profile, user and posts
+// @access		private
+router.delete('/', auth, async (req, res) => {
+	try {
+		console.log(
+			'| Trying to delete the user account & profile & posts of the current logged-in user - ' +
+				req.user,
+		);
+		// await Posts.deleteMany({user: req.user.id})
+		console.log('| Deleted posts.');
+		await Profile.findOneAndRemove({ user: req.user.id });
+		console.log('| Deleted profile.');
+
+		await User.findOneAndRemove({ _id: req.user.id });
+		console.log('| Deleted user.');
+
+		console.log('| Deletion successful.');
+		res.json({ msg: 'Profile deleted successfully.' });
+	} catch (error) {
+		console.error('! Unable to delete - ' + error);
 		res.status(500).send('Server error.');
 	}
 });

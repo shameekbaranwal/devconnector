@@ -25,9 +25,11 @@ router.post(
 	[
 		check('name', 'Name is a required field.').not().isEmpty(),
 		check('email', 'The email has an invalid format.').isEmail(),
-		check('password', 'The password has less than 8 characters.').isLength({
-			min: 8,
-		}),
+		check('password', 'The password has less` than 8 characters.').isLength(
+			{
+				min: 8,
+			},
+		),
 	],
 	async (req, res) => {
 		// validation logic
@@ -42,7 +44,7 @@ router.post(
 		const { name, email, password } = req.body;
 
 		try {
-			console.log('Request to register a new user : ' + req.body.email);
+			console.log('Request to register a new user : ' + email);
 			// see if the user already exists, if does then send back an error
 			let user = await User.findOne({ email });
 			if (user) {
