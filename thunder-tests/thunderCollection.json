@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "_id": "bd559a3d-dade-4154-bca1-57c1246bb0ea",
+    "colName": "Users & Auth",
+    "created": "2022-08-02T01:47:18.707Z",
+    "sortNum": 10000,
+    "folders": []
+  },
+  {
+    "_id": "bfd607c6-3fec-4a6f-ab85-c1739928c68a",
+    "colName": "Profile",
+    "created": "2022-08-02T01:47:23.835Z",
+    "sortNum": 20000,
+    "folders": []
+  }
+]
