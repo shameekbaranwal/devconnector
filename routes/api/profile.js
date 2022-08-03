@@ -36,9 +36,7 @@ router.get('/', async (req, res) => {
 // @access		private
 router.get('/me', auth, async (req, res) => {
 	// reached this stage, hence the token is valid and the corresponding user object from the database is present as req.user
-	console.log(
-		'Token verified, now looking for the profile object to send back.',
-	);
+	console.log('Looking for the profile object to send back.');
 	try {
 		// grab the user object accessed during the middleware operation
 		const { user } = req;
@@ -56,7 +54,7 @@ router.get('/me', auth, async (req, res) => {
 				.status(400)
 				.json({ msg: 'No profile available for this user.' });
 		}
-		console.log('Profile found');
+		console.log('| Profile found');
 		return res.json(profile);
 	} catch (error) {
 		console.log("! Unable to send back the user's profile: " + error);
@@ -289,5 +287,44 @@ router.post(
 		}
 	},
 );
+
+// @route 		DELETE api/profile/experience
+// @desc 		delete an experience from the currently logged-in user's profile
+// @access		private
+router.delete('/experience/:experience_id', auth, async (req, res) => {
+	try {
+		console.log(
+			`Trying to delete experience ${req.params.experience_id} from the currently logged-in user's profile.`,
+		);
+		const { experience_id } = req.params;
+
+		console.log('| Getting profile from the database.');
+		const profile = await Profile.findOne({ user: req.user.id });
+		const index = profile.experience
+			.map(exp => exp.id)
+			.indexOf(experience_id);
+		if (index === -1) {
+			console.log('! No experience found with that ID.');
+			return res.status(400).json({
+				errors: [
+					{
+						msg: `No experience found with the ID - ${experience_id}`,
+					},
+				],
+			});
+		}
+
+		profile.experience.splice(index, 1);
+		console.log('| Deleted experience from profile.');
+
+		await profile.save();
+		console.log('| Updated profile experiences in database.');
+
+		res.send('Experience deleted successfully.');
+	} catch (error) {
+		console.log('! Could not delete the experience - ' + error);
+		res.status(500).json({ errors: [{ msg: 'Server error.' }] });
+	}
+});
 
 export default router;
