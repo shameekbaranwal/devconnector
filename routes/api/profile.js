@@ -182,7 +182,9 @@ router.get('/user/:user_id', async (req, res) => {
 			console.log(
 				`! Could not get a profile for user ${req.params.user_id}.`,
 			);
-			return res.status(400).json({ msg: 'Profile not found.' });
+			return res
+				.status(400)
+				.json({ errors: [{ msg: 'Profile not found.' }] });
 		}
 		console.log(`| Got the profile, sending back to client.`);
 		res.json(profile);
@@ -192,7 +194,9 @@ router.get('/user/:user_id', async (req, res) => {
 		);
 		// in case the error is occurring because of the object ID not being of a valid format, then the profile.findOne will throw an error and cause the response to be "server error", which is wrong. so in that case we want to still say that profile is not found for that user. this can be implemented by:
 		if (error.kind === 'ObjectId')
-			return res.status(400).json({ msg: 'Profile not found.' });
+			return res
+				.status(400)
+				.json({ errors: [{ msg: 'Profile not found.' }] });
 
 		res.status(500).send('Server error.');
 	}
@@ -222,5 +226,68 @@ router.delete('/', auth, async (req, res) => {
 		res.status(500).send('Server error.');
 	}
 });
+
+// @route 		POST api/profile/experience
+// @desc 		add an experience to the currently logged-in user's profile
+// @access		private
+router.post(
+	'/experience',
+	auth,
+	[
+		check('title', 'Title is a required field.').not().isEmpty(),
+		check('company', 'Company is a required field.').not().isEmpty(),
+		check('from', 'Starting date is a required field.').not().isEmpty(),
+	],
+	async (req, res) => {
+		console.log(
+			"Trying to add a new experience to the currently logged-in user's profile.",
+		);
+
+		const errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			res.status(400).json({ errors: errors.array() });
+			console.log('! Invalid data in body - ' + errors.array());
+		}
+
+		try {
+			console.log('| Getting the profile document from the database.');
+			const profile = await Profile.findOne({ user: req.user.id });
+			if (!profile) {
+				console.log('! No profile associated with the user.');
+				return res.status(400).json({
+					errors: [{ msg: 'No profile associated with the user.' }],
+				});
+			}
+
+			const { title, company, location, from, to, current, description } =
+				req.body;
+			const newExperience = {
+				title,
+				company,
+				location,
+				from,
+				to,
+				current,
+				description,
+			};
+			console.log('| Adding the new experience to the profile.');
+			if (current) newExperience.to = Date.now();
+			profile.experience.push(newExperience);
+			profile.experience.sort((a, b) => b.to - a.to);
+			console.log(profile.experience);
+
+			console.log('| Updating the document in the database.');
+			await profile.save();
+
+			console.log('| Profile updated successfully.');
+			res.json({ msg: 'Profile updated successfully.' });
+		} catch (error) {
+			console.log(
+				'! Error in adding experience to the profile - ' + error,
+			);
+			res.status(500).send('Server error.');
+		}
+	},
+);
 
 export default router;

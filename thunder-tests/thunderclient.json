@@ -8,12 +8,12 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-08-02T01:47:33.067Z",
-    "modified": "2022-08-02T01:48:26.262Z",
+    "modified": "2022-08-03T17:37:55.076Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"name\": \"Shameek Kumar Baranwal\",\n  \"email\": \"shameekbaranwal@gmail.com\",\n  \"password\": \"abcdefgh\"\n}",
+      "raw": "{\n  \"name\": \"jesse pinkman\",\n  \"email\": \"jessepinkman@gmail.com\",\n  \"password\": \"abcdefgh\"\n}",
       "form": []
     },
     "tests": []
@@ -27,12 +27,12 @@
     "method": "POST",
     "sortNum": 20000,
     "created": "2022-08-02T01:48:47.729Z",
-    "modified": "2022-08-02T01:49:44.541Z",
+    "modified": "2022-08-03T17:38:08.212Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"email\": \"shameekbaranwal@gmail.com\",\n  \"password\": \"abcdefgh\"\n}",
+      "raw": "{\n  \"email\": \"jessepinkman@gmail.com\",\n  \"password\": \"abcdefgh\"\n}",
       "form": []
     },
     "tests": []
@@ -46,11 +46,11 @@
     "method": "GET",
     "sortNum": 10000,
     "created": "2022-08-02T01:50:55.174Z",
-    "modified": "2022-08-02T01:54:53.086Z",
+    "modified": "2022-08-03T17:38:23.048Z",
     "headers": [
       {
         "name": "x-auth-token",
-        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjJlODgzZGY5ODdlZTYwMmY4ODVhNDY3In0sImlhdCI6MTY1OTQwNTI3OSwiZXhwIjoxNjU5NDkxNjc5fQ.4cEKArP_1gztaKd8PJZMDMPwXAleviFsu2_79k1fT88"
+        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjJlYWIyNzJkNGIwMjQwZWI0M2UyZDdkIn0sImlhdCI6MTY1OTU0ODI4OCwiZXhwIjoxNjU5NjM0Njg4fQ.0bfrZHF-81kNsmzn4pIvNd5D-JLB8OwzUM3y6OSPRps"
       }
     ],
     "params": [],
@@ -79,17 +79,17 @@
     "method": "POST",
     "sortNum": 30000,
     "created": "2022-08-02T01:52:11.130Z",
-    "modified": "2022-08-02T07:02:58.314Z",
+    "modified": "2022-08-03T17:39:01.322Z",
     "headers": [
       {
         "name": "x-auth-token",
-        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjJlODgyNmQ5N2Q5YjBhYTY3ZGMzMzI2In0sImlhdCI6MTY1OTQwNDk4NCwiZXhwIjoxNjU5NDkxMzg0fQ.kBvh9wVgV5K2ZGYUWuhBPsFtse10gluS5Jn3P6bAC8w"
+        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjJlYWIyNzJkNGIwMjQwZWI0M2UyZDdkIn0sImlhdCI6MTY1OTU0ODI4OCwiZXhwIjoxNjU5NjM0Njg4fQ.0bfrZHF-81kNsmzn4pIvNd5D-JLB8OwzUM3y6OSPRps"
       }
     ],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"status\": \"Developer\",\n  \"skills\": \"React, Node, Git, Tailwind, Java\",\n  \"githubusername\": \"shameekbaranwal\",\n  \"linkedin\": \"shameekbaranwal\",\n  \"location\": \"Lucknow\",\n  \"website\": \"https://shameekbaranwal.github.io/\"\n}",
+      "raw": "{\n  \"status\": \"Meth Distributor & Cook\",\n  \"skills\": \"React, Node\",\n  \"githubusername\": \"jessepinkman\",\n  \"linkedin\": \"jessepinkman\",\n  \"location\": \"ABQ, NM\",\n  \"website\": \"https://jessepinkman.com/\"\n}",
       "form": []
     },
     "tests": []
@@ -111,6 +111,30 @@
       }
     ],
     "params": [],
+    "tests": []
+  },
+  {
+    "_id": "e1f41789-6b80-448b-bb6e-6e5e076b3e1c",
+    "colId": "bfd607c6-3fec-4a6f-ab85-c1739928c68a",
+    "containerId": "",
+    "name": "Add New Experience to Profile",
+    "url": "http://localhost:5000/api/profile/experience",
+    "method": "POST",
+    "sortNum": 50000,
+    "created": "2022-08-03T17:18:41.443Z",
+    "modified": "2022-08-03T17:41:46.198Z",
+    "headers": [
+      {
+        "name": "x-auth-token",
+        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjJlYWIyNzJkNGIwMjQwZWI0M2UyZDdkIn0sImlhdCI6MTY1OTU0ODI4OCwiZXhwIjoxNjU5NjM0Njg4fQ.0bfrZHF-81kNsmzn4pIvNd5D-JLB8OwzUM3y6OSPRps"
+      }
+    ],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"title\": \"Cook\",\n  \"company\": \"Krazy-8\",\n  \"location\": \"ABQ\",\n  \"from\": \"2007-01-01\",\n  \"current\": true,\n  \"description\": \"Cooked meth for Krazy-8 and his cousin's distribution system.\"\n}",
+      "form": []
+    },
     "tests": []
   }
 ]

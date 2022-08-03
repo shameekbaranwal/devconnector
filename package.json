@@ -6,7 +6,7 @@
 	"type": "module",
 	"scripts": {
 		"start": "node server.js",
-		"dev": "nodemon server.js",
+		"dev": "nodemon server.js --ignore 'thunder-tests/*.json'",
 		"client": "",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
