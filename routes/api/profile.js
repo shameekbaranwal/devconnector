@@ -1,5 +1,7 @@
 import express from 'express';
 import { check, validationResult } from 'express-validator';
+import axios from 'axios';
+import c from 'config';
 
 import auth from '../../middleware/auth.js';
 import Profile from '../../models/Profile.js';
@@ -447,6 +449,44 @@ router.delete('/education/:education_id', auth, async (req, res) => {
 // @access		public
 router.get('/github/:username', async (req, res) => {
 	const { username } = req.params;
+	console.log(
+		"Getting user's repository data from GitHub and sending back to the user.",
+	);
+
+	try {
+		const url = `https://api.github.com/users/${username}/repos`;
+		const uri = axios.getUri({
+			baseURL: url,
+			params: {
+				per_page: 5,
+				sort: 'created:asc',
+				client_id: c.get('GitHub_Client_ID'),
+				client_secret: c.get('GitHub_Client_Secret'),
+			},
+			headers: { 'user-agent': 'node.js' },
+		});
+		const response = await axios.get(uri);
+
+		console.log('| Received response from GitHub.');
+		if (response.status !== 200) {
+			console.log(
+				`No user found associated with the username ${username}.`,
+			);
+			return res.status(400).json({
+				errors: [
+					{
+						msg: `No user found associated with the username ${username}`,
+					},
+				],
+			});
+		}
+
+		console.log('| No issues with response, sending back to client.');
+		return res.json(response.data);
+	} catch (error) {
+		console.log("! Could not get user's repository data - ", error);
+		return res.status(500).send({ errors: [{ msg: 'Server Error.' }] });
+	}
 });
 
 export default router;

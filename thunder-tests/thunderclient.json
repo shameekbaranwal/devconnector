@@ -198,5 +198,19 @@
     ],
     "params": [],
     "tests": []
+  },
+  {
+    "_id": "3efd5c5e-a50b-4479-8b53-c24d9f096d22",
+    "colId": "bfd607c6-3fec-4a6f-ab85-c1739928c68a",
+    "containerId": "",
+    "name": "Get Recent GitHub Repositories of User",
+    "url": "http://localhost:5000/api/profile/github/HappyKid117",
+    "method": "GET",
+    "sortNum": 80000,
+    "created": "2022-08-04T02:55:30.462Z",
+    "modified": "2022-08-04T03:08:52.970Z",
+    "headers": [],
+    "params": [],
+    "tests": []
   }
 ]

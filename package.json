@@ -21,14 +21,14 @@
 	},
 	"homepage": "https://github.com/shameekbaranwal/devconnector#readme",
 	"dependencies": {
+		"axios": "^0.27.2",
 		"bcryptjs": "^2.4.3",
 		"config": "^3.3.7",
 		"express": "^4.18.1",
 		"express-validator": "^6.14.2",
 		"gravatar": "^1.8.2",
 		"jsonwebtoken": "^8.5.1",
-		"mongoose": "^6.5.0",
-		"request": "^2.88.2"
+		"mongoose": "^6.5.0"
 	},
 	"devDependencies": {
 		"concurrently": "^7.3.0",
