@@ -27,12 +27,12 @@
     "method": "POST",
     "sortNum": 20000,
     "created": "2022-08-02T01:48:47.729Z",
-    "modified": "2022-08-03T17:38:08.212Z",
+    "modified": "2022-08-03T21:35:30.915Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"email\": \"jessepinkman@gmail.com\",\n  \"password\": \"abcdefgh\"\n}",
+      "raw": "{\n  \"email\": \"shameekbaranwal@gmail.com\",\n  \"password\": \"abcdefgh\"\n}",
       "form": []
     },
     "tests": []
@@ -151,6 +151,49 @@
       {
         "name": "x-auth-token",
         "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjJlYWIyNzJkNGIwMjQwZWI0M2UyZDdkIn0sImlhdCI6MTY1OTU0ODI4OCwiZXhwIjoxNjU5NjM0Njg4fQ.0bfrZHF-81kNsmzn4pIvNd5D-JLB8OwzUM3y6OSPRps"
+      }
+    ],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "b375e610-41c3-4445-9866-0ddb82f6abdd",
+    "colId": "bfd607c6-3fec-4a6f-ab85-c1739928c68a",
+    "containerId": "",
+    "name": "Add New Education to Profile",
+    "url": "http://localhost:5000/api/profile/education",
+    "method": "POST",
+    "sortNum": 55000,
+    "created": "2022-08-03T21:34:01.043Z",
+    "modified": "2022-08-03T21:37:19.514Z",
+    "headers": [
+      {
+        "name": "x-auth-token",
+        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjJlODgzZGY5ODdlZTYwMmY4ODVhNDY3In0sImlhdCI6MTY1OTU2MjUzMCwiZXhwIjoxNjU5NjQ4OTMwfQ.0wxuA05wpPTTS5D8Db3c8X_Haaw5fKby3yxIl1VQvvE"
+      }
+    ],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"school\": \"BITS Pilani\",\n  \"degree\": \"B.E.\",\n  \"fieldofstudy\": \"Computer Science & Engineering\",\n  \"location\": \"Goa, India\",\n  \"from\": \"2019-08-01\",\n  \"current\": true\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "28e9ed4d-4629-4c2d-815a-4cafacda2622",
+    "colId": "bfd607c6-3fec-4a6f-ab85-c1739928c68a",
+    "containerId": "",
+    "name": "Delete an Education from Profile",
+    "url": "http://localhost:5000/api/profile/education/62eaef3b469ac854699592e1",
+    "method": "DELETE",
+    "sortNum": 70000,
+    "created": "2022-08-03T21:58:26.392Z",
+    "modified": "2022-08-03T21:58:58.552Z",
+    "headers": [
+      {
+        "name": "x-auth-token",
+        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjJlODgzZGY5ODdlZTYwMmY4ODVhNDY3In0sImlhdCI6MTY1OTU2MjUzMCwiZXhwIjoxNjU5NjQ4OTMwfQ.0wxuA05wpPTTS5D8Db3c8X_Haaw5fKby3yxIl1VQvvE"
       }
     ],
     "params": [],

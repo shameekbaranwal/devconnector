@@ -327,4 +327,126 @@ router.delete('/experience/:experience_id', auth, async (req, res) => {
 	}
 });
 
+// @route 		POST api/profile/education
+// @desc 		add an education to the currently logged-in user's profile
+// @access		private
+router.post(
+	'/education',
+	auth,
+	[
+		check('degree', 'Degree is a required field.').not().isEmpty(),
+		check('school', 'School is a required field.').not().isEmpty(),
+		check('from', 'Starting date is a required field.').not().isEmpty(),
+		check('fieldofstudy', 'Field of Study is a required field.')
+			.not()
+			.isEmpty(),
+	],
+	async (req, res) => {
+		console.log(
+			"Trying to add a new education to the currently logged-in user's profile.",
+		);
+
+		const errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			res.status(400).json({ errors: errors.array() });
+			console.log('! Invalid data in body - ' + errors.array());
+		}
+
+		try {
+			console.log('| Getting the profile document from the database.');
+			const profile = await Profile.findOne({ user: req.user.id });
+			if (!profile) {
+				console.log('! No profile associated with the user.');
+				return res.status(400).json({
+					errors: [{ msg: 'No profile associated with the user.' }],
+				});
+			}
+
+			const {
+				school,
+				degree,
+				location,
+				from,
+				to,
+				current,
+				fieldofstudy,
+				description,
+			} = req.body;
+			const newEducation = {
+				school,
+				degree,
+				location,
+				from,
+				to,
+				current,
+				fieldofstudy,
+				description,
+			};
+
+			console.log('| Adding the new education to the profile.');
+			if (current) newEducation.to = Date.now();
+			profile.education.push(newEducation);
+			profile.education.sort((a, b) => b.to - a.to);
+			console.log(profile.education);
+
+			console.log('| Updating the document in the database.');
+			await profile.save();
+
+			console.log('| Profile updated successfully.');
+			res.json({ msg: 'Profile updated successfully.' });
+		} catch (error) {
+			console.log(
+				'! Error in adding education to the profile - ' + error,
+			);
+			res.status(500).send('Server error.');
+		}
+	},
+);
+
+// @route 		DELETE api/profile/education
+// @desc 		delete an education from the currently logged-in user's profile
+// @access		private
+router.delete('/education/:education_id', auth, async (req, res) => {
+	try {
+		console.log(
+			`Trying to delete education ${req.params.education_id} from the currently logged-in user's profile.`,
+		);
+		const { education_id } = req.params;
+
+		console.log('| Getting profile from the database.');
+		const profile = await Profile.findOne({ user: req.user.id });
+		const index = profile.education
+			.map(exp => exp.id)
+			.indexOf(education_id);
+		if (index === -1) {
+			console.log('! No education found with that ID.');
+			return res.status(400).json({
+				errors: [
+					{
+						msg: `No education found with the ID - ${education_id}`,
+					},
+				],
+			});
+		}
+
+		profile.education.splice(index, 1);
+		console.log('| Deleted education from profile.');
+
+		await profile.save();
+		console.log('| Updated profile educations in database.');
+
+		res.send('Education deleted successfully.');
+	} catch (error) {
+		console.log('! Could not delete the education - ' + error);
+		res.status(500).json({ errors: [{ msg: 'Server error.' }] });
+	}
+});
+
+// @route 		GET api/profile/github/:username
+// @desc		get the five most recent GitHub repositories from the user's GitHub profile
+// @access		public
+router.get('/github/:username', async (req, res) => {
+	const { username } = req.params;
+});
+
 export default router;
